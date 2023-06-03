@@ -26,10 +26,10 @@ THE SOFTWARE. */
     module.exports = factory(videojs.default || videojs);
   } else if(typeof define === 'function' && define.amd) {
     define(['videojs'], function(videojs){
-      return (root.Youtube = factory(videojs));
+      return (root.YoutubeT = factory(videojs));
     });
   } else {
-    root.Youtube = factory(root.videojs);
+    root.YoutubeT = factory(root.videojs);
   }
 }(this, function(videojs) {
   'use strict';
@@ -37,7 +37,7 @@ THE SOFTWARE. */
   var _isOnMobile = videojs.browser.IS_IOS || videojs.browser.IS_NATIVE_ANDROID;
   var Tech = videojs.getTech('Tech');
 
-  class Youtube extends Tech {
+  class YoutubeT extends Tech {
 
     constructor(options, ready) {
       super(options, ready);
@@ -55,10 +55,10 @@ THE SOFTWARE. */
             this.el_.parentNode.className += ' vjs-youtube-mobile';
           }
 
-          if (Youtube.isApiReady) {
+          if (YoutubeT.isApiReady) {
             this.initYTPlayer();
           } else {
-            Youtube.apiReadyQueue.push(this);
+            YoutubeT.apiReadyQueue.push(this);
           }
         }
       }.bind(this));
@@ -75,9 +75,9 @@ THE SOFTWARE. */
         }
       } else {
         //YouTube API hasn't finished loading or the player is already disposed
-        var index = Youtube.apiReadyQueue.indexOf(this);
+        var index = YoutubeT.apiReadyQueue.indexOf(this);
         if (index !== -1) {
-          Youtube.apiReadyQueue.splice(index, 1);
+          YoutubeT.apiReadyQueue.splice(index, 1);
         }
       }
       this.ytPlayer = null;
@@ -414,7 +414,7 @@ THE SOFTWARE. */
 
       delete this.errorNumber;
       this.source = source;
-      this.url = Youtube.parseUrl(source.src);
+      this.url = YoutubeT.parseUrl(source.src);
 
       if (!this.options_.poster) {
         if (this.url.videoId) {
@@ -692,19 +692,19 @@ THE SOFTWARE. */
     }
   }
 
-  Youtube.isSupported = function() {
+  YoutubeT.isSupported = function() {
     return true;
   };
 
-  Youtube.canPlaySource = function(e) {
-    return Youtube.canPlayType(e.type);
+  YoutubeT.canPlaySource = function(e) {
+    return YoutubeT.canPlayType(e.type);
   };
 
-  Youtube.canPlayType = function(e) {
+  YoutubeT.canPlayType = function(e) {
     return (e === 'video/youtube');
   };
 
-  Youtube.parseUrl = function(url) {
+  YoutubeT.parseUrl = function(url) {
     var result = {
       videoId: null
     };
@@ -728,10 +728,10 @@ THE SOFTWARE. */
 
   function apiLoaded() {
     YT.ready(function() {
-      Youtube.isApiReady = true;
+      YoutubeT.isApiReady = true;
 
-      for (var i = 0; i < Youtube.apiReadyQueue.length; ++i) {
-        Youtube.apiReadyQueue[i].initYTPlayer();
+      for (var i = 0; i < YoutubeT.apiReadyQueue.length; ++i) {
+        YoutubeT.apiReadyQueue[i].initYTPlayer();
       }
     });
   }
@@ -782,7 +782,7 @@ THE SOFTWARE. */
     head.appendChild(style);
   }
 
-  Youtube.apiReadyQueue = [];
+  YoutubeT.apiReadyQueue = [];
 
   if (typeof document !== 'undefined'){
     loadScript('https://www.youtube.com/iframe_api', apiLoaded);
@@ -791,8 +791,8 @@ THE SOFTWARE. */
 
   // Older versions of VJS5 doesn't have the registerTech function
   if (typeof videojs.registerTech !== 'undefined') {
-    videojs.registerTech('Youtube', Youtube);
+    videojs.registerTech('YoutubeT', YoutubeT);
   } else {
-    videojs.registerComponent('Youtube', Youtube);
+    videojs.registerComponent('YoutubeT', YoutubeT);
   }
 }));
